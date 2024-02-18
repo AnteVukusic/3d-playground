@@ -1,0 +1,34 @@
+/* @font-face {
+  font-family: 'Code';
+  src: local('Code Light'), url(fonts/code_light.otf) format('otf');
+} */
+
+body {
+  background-color: black;
+  margin: 0;
+  font-family: "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 16px;
+}
+
+#menu {
+  z-index: 100;
+  font-size: 20px;
+  color: rgb(185, 185, 185);
+  position: fixed;
+  margin: 1rem;
+  padding: 1rem;
+  list-style: none;
+  border: solid 1px gray;
+  background-color: rgba(128, 128, 128, 0.044);
+}
+
+#menu li:hover {
+  color: white;
+  cursor: pointer;
+}
+
+#scene {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+}
