@@ -51,7 +51,7 @@ const createControls = () => {
 };
 
 const createGround = () => {
-  const groundGeometry = new THREE.PlaneGeometry(20, 20, 32, 32);
+  const groundGeometry = new THREE.PlaneGeometry(100, 100, 32, 32);
   groundGeometry.rotateX(-Math.PI / 2);
 
   const groundMaterial = new THREE.MeshStandardMaterial({
@@ -73,7 +73,7 @@ const createLights = () => {
 
   const spotLight2 = new THREE.SpotLight(0xffffff, 3, 200, 0.22, 1);
   spotLight2.position.set(10, 25, 25);
-  spotLight2.castShadow = false;
+  spotLight2.castShadow = true;
   spotLight2.shadow.bias = -0.001;
 
   scene.add(spotLight1);
@@ -81,10 +81,13 @@ const createLights = () => {
 };
 
 const loadObject = (objectName) => {
+  const loadingElement = document.getElementById("loading-element");
   const loader = new GLTFLoader().setPath(`public/${objectName}/`);
   loader.load(
     "scene.gltf",
     (gltf) => {
+      loadingElement.style.display = "none";
+      createGround();
       const mesh = gltf.scene;
 
       mesh.traverse((child) => {
@@ -97,7 +100,10 @@ const loadObject = (objectName) => {
       mesh.position.set(0, 2, -0.5);
       scene.add(mesh);
     },
-    (xhr) => {}
+    (xhr) => {
+      var percentComplete = (xhr.loaded / xhr.total) * 100;
+      loadingElement.innerHTML = "Loading: " + percentComplete.toFixed(2) + "%";
+    }
   );
 };
 
@@ -160,7 +166,6 @@ const init = (objectName) => {
   createCamera();
   createScene();
   createControls();
-  createGround();
   createLights();
   bindListeners();
   loadObject(objectName);
